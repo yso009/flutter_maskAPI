@@ -43,10 +43,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     stores.clear();
     jsonStores.forEach((e){
-      Store store = Store.fromJson(e);
-      stores.add(store);
-      // stores.add(Store.fromJson(e));
+      stores.add(Store.fromJson(e));
+
+      // Store store = Store.fromJson(e);
+      // stores.add(store);
     });
+
   }
 
   @override
@@ -55,14 +57,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('마스크 재고 있는 곳 : 0곳'),
       ),
-      body: Center(
-          child: RaisedButton(
-        onPressed: () async {
-          await fetch();
-          print(stores.toString());
-        },
-            child:  Text('테스트'),
-      )),
+      body: ListView(
+        children: stores.map((e) => Text(e.remainStat ?? '')).toList() // null 값을 ''로 표시
+      )
     );
   }
 }
