@@ -1,13 +1,13 @@
 class Store {
-  String? code;
-  String? name;
-  String? addr;
-  String? type;
-  num? lat;
-  num? lng;
-  String? stockAt;
-  String? remainStat;
-  String? createdAt;
+  String code;
+  String name;
+  String addr;
+  String type;
+  num lat;
+  num lng;
+  String stockAt;
+  String remainStat;
+  String createdAt;
 
   Store(
       {this.code,
