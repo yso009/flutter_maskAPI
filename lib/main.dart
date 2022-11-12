@@ -33,33 +33,34 @@ class _MyHomePageState extends State<MyHomePage> {
   final stores = List<Store>();
 
   Future fetch() async {
-    var url = 'https://gist.githubusercontent.com/junsuk5/bb7485d5f70974deee920b8f0cd1e2f0/raw/063f64d9b343120c2cb01a6555cf9b38761b1d94/sample.json?lat=37.6297559&lng=127.0177412&m=5';
+    var url =
+        'https://gist.githubusercontent.com/junsuk5/bb7485d5f70974deee920b8f0cd1e2f0/raw/063f64d9b343120c2cb01a6555cf9b38761b1d94/sample.json?lat=37.6297559&lng=127.0177412&m=5';
 
     var response = await http.get(url);
 
-    final jsonResult =  jsonDecode(utf8.decode(response.bodyBytes));
+    final jsonResult = jsonDecode(utf8.decode(response.bodyBytes));
 
     final jsonStores = jsonResult['stores'];
 
     stores.clear();
-    jsonStores.forEach((e){
+    jsonStores.forEach((e) {
       stores.add(Store.fromJson(e));
 
       // Store store = Store.fromJson(e);
       // stores.add(store);
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('마스크 재고 있는 곳 : 0곳'),
-      ),
-      body: ListView(
-        children: stores.map((e) => Text(e.remainStat ?? '')).toList() // null 값을 ''로 표시
-      )
-    );
+        appBar: AppBar(
+          title: Text('마스크 재고 있는 곳 : 0곳'),
+        ),
+        body: ListView(
+            children: stores.map((e) {
+          return Text(e.remainStat ?? '');
+        }).toList() // null 값을 ''로 표시
+            ));
   }
 }
