@@ -67,7 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('마스크 재고 있는 곳 : ${stores.length}곳'),
+          title: Text('마스크 재고 있는 곳 : ${stores.where((e) {
+            return e.remainStat == 'plenty' ||
+                e.remainStat == 'some' ||
+                e.remainStat == 'few';
+          }).length}곳'),
           actions: [
             IconButton(
               icon: Icon(Icons.refresh),
@@ -79,7 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ? loadingWidget()
             : // isLoading 이면 loadingWidget을 리턴
             ListView(
-                children: stores.map((e) {
+                children: stores.where((e) {
+                return e.remainStat == 'plenty' ||
+                    e.remainStat == 'some' ||
+                    e.remainStat == 'few';
+              }) // where 함수는 필요한 것만 걸러내는 기능을 함.
+                    .map((e) {
                 return ListTile(
                   title: Text(e.name),
                   subtitle: Text(e.addr),
@@ -97,7 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
       remainStat = '충분';
       description = '100개 이상';
       color = Colors.green;
-    } switch (store.remainStat) {
+    }
+    switch (store.remainStat) {
       case 'plenty':
         remainStat = '충분';
         description = '100개 이상';
@@ -123,8 +133,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Column(
       children: [
-        Text(remainStat, style: TextStyle(color: color, fontWeight: FontWeight.bold),),
-        Text(description, style: TextStyle(color: color,))],
+        Text(
+          remainStat,
+          style: TextStyle(color: color, fontWeight: FontWeight.bold),
+        ),
+        Text(description,
+            style: TextStyle(
+              color: color,
+            ))
+      ],
     );
   }
 
