@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
       description = '100개 이상';
       color = Colors.green;
     } switch (store.remainStat) {
-      case 'planty':
+      case 'plenty':
         remainStat = '충분';
         description = '100개 이상';
         color = Colors.green;
