@@ -16,12 +16,9 @@ class StoreRepository {
 
     final jsonStores = jsonResult['stores'];
 
-    // setState(() {
       jsonStores.forEach((e) {
         stores.add(Store.fromJson(e));
       });
-      // isLoading = false;
-    // });
     print('fetch 완료');
 
     return stores;
