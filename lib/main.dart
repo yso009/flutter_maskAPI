@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mask/model/store.dart';
-import 'package:flutter_mask/repository/store_repository.dart';
 import 'package:flutter_mask/viewmodel/store_model.dart';
 import 'package:provider/provider.dart';
 
@@ -33,27 +32,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var stores = List<Store>();
   var isLoading = false;
-
-  final storeRepository = StoreRepository();
 
   @override
   void initState() {
     super.initState();
 
-    storeRepository.fetch().then((value) {
-      setState(() {
-        stores = value;
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final storeModel = Provider.of<StoreModel>(context); // main 함수에서 제공하는 value : StoreModel instance를 사용할 수 있게 함.
     return Scaffold(
         appBar: AppBar(
-          title: Text('마스크 재고 있는 곳 : ${stores.where((e) {
+          title: Text('마스크 재고 있는 곳 : ${storeModel.stores.where((e) {
             return e.remainStat == 'plenty' ||
                 e.remainStat == 'some' ||
                 e.remainStat == 'few';
@@ -62,11 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               icon: Icon(Icons.refresh),
               onPressed: () {
-                storeRepository.fetch().then((e) {
-                  setState(() {
-                    stores = e;
-                  });
-                });
+                storeModel.fetch();
               },
             )
           ],
@@ -75,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ? loadingWidget()
             : // isLoading 이면 loadingWidget을 리턴
             ListView(
-                children: stores.where((e) {
+                children: storeModel.stores.where((e) {
                 return e.remainStat == 'plenty' ||
                     e.remainStat == 'some' ||
                     e.remainStat == 'few';
