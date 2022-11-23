@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mask/model/store.dart';
 import 'package:flutter_mask/repository/store_repository.dart';
-
+import 'package:flutter_mask/viewmodel/store_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider.value(
+    value: StoreModel(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -30,14 +34,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var stores = List<Store>();
-  var isLoading = true;
+  var isLoading = false;
 
   final storeRepository = StoreRepository();
 
   @override
   void initState() {
     super.initState();
-
 
     storeRepository.fetch().then((value) {
       setState(() {
