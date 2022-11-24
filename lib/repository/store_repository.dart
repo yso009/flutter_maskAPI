@@ -21,6 +21,10 @@ class StoreRepository {
       });
     print('fetch 완료');
 
-    return stores;
+    return stores.where((e) { // where 함수는 필요한 것만 걸러내는 기능을 함.
+      return e.remainStat == 'plenty' ||
+          e.remainStat == 'some' ||
+          e.remainStat == 'few';
+    }).toList();
   }
 }
