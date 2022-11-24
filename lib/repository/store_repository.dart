@@ -2,7 +2,10 @@ import 'package:flutter_mask/model/store.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:latlong/latlong.dart';
+
 class StoreRepository {
+  final _distance = Distance();
 
   Future<List<Store>> fetch(double lat, double lng) async { //List형태인 Store를 return 하겠다. 선언
     final stores = List<Store>();
@@ -17,7 +20,11 @@ class StoreRepository {
     final jsonStores = jsonResult['stores'];
 
       jsonStores.forEach((e) {
-        stores.add(Store.fromJson(e));
+        final store = Store.fromJson(e);
+        final km = _distance.as(LengthUnit.Kilometer,
+        LatLng(store.lat, store.lng), LatLng(lat,lng));
+        store.km = km;
+        stores.add(store);
       });
     print('fetch 완료');
 
