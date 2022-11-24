@@ -23,13 +23,10 @@ class MainPage extends StatelessWidget {
         ),
         body: storeModel.isLoading
             ? loadingWidget()
-            : ListView(                // isLoading 이면 loadingWidget을 리턴
-        children: storeModel.stores.map((e) {
-                return ListTile(
-                  title: Text(e.name),
-                  subtitle: Text(e.addr),
-                  trailing: RemainStatListTile(e),
-                );
+            : ListView(
+                // isLoading 이면 loadingWidget을 리턴
+                children: storeModel.stores.map((e) {
+                return RemainStatListTile(e);
               }).toList() // null 값을 ''로 표시
                 ));
   }
